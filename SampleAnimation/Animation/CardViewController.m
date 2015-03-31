@@ -92,6 +92,7 @@
 
     [self.tableView setAlpha:0.0];
     
+    NSLog(@"Card Frame:%@",NSStringFromCGRect(self.view.frame));
     
     __block CardViewController *crd=self;
     
@@ -281,7 +282,7 @@
 
 -(void)pushPrayerDetailVC
 {
-           [self showDetailView];
+           
  
 }
 
@@ -317,12 +318,7 @@
 
 -(void)acceptPrayerRequest:(NSDictionary*)prayerData {
     
-    NSDictionary *prayerRequestDictionary = [prayerData objectForKey:@"PrayerRequest"];
-    NSString *prayerId = [prayerRequestDictionary objectForKey:@"id"];
-  
-  //  NSArray *myIDArray = [NSArray arrayWithObjects:myID, nil];
-    
-  //  NSDictionary *acceptRequest = [NSDictionary dictionaryWithObjectsAndKeys:myIDArray,@"acceptedUserId", nil];
+   
   
 }
 

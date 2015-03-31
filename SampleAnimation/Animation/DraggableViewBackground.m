@@ -9,6 +9,7 @@
 @interface DraggableViewBackground()
 
 @property (nonatomic) CGRect initialDesignFrame;
+@property (nonatomic) BOOL miniCard;
 
 @end
 
@@ -20,8 +21,6 @@
 //this makes it so only two cards are loaded at a time to
 //avoid performance and memory costs
 static const int MAX_BUFFER_SIZE = 3; //%%% max number of cards loaded at any given time, must be greater than 1
-static const float CARD_HEIGHT = 400; //%%% height of the draggable card
-static const float CARD_WIDTH = 335; //290 //%%% width of the draggable card
 
 @synthesize exampleCardLabels,delegate; //%%% all the labels I'm using as example data at the moment
 @synthesize allCards;//%%% all the cards
@@ -29,7 +28,13 @@ static const float CARD_WIDTH = 335; //290 //%%% width of the draggable card
 
 
 - (CGRect)initialDesignFrame {
-    _initialDesignFrame = CGRectMake(20, 72, self.frame.size.width-40, self.frame.size.height/2);
+    if(!self.miniCard) {
+        _initialDesignFrame = CGRectMake(20, 72, self.frame.size.width-40, self.frame.size.height/2);
+    }
+    else {
+        _initialDesignFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+        
+    }
     return _initialDesignFrame;
 }
 
@@ -76,25 +81,33 @@ static const float CARD_WIDTH = 335; //290 //%%% width of the draggable card
 }
 -(void)cardTap
 {
-    [delegate pushPrayerDetailVC];
+    //[delegate pushPrayerDetailVC];
+    self.miniCard = YES;
+    [self doCardAnimation];
 }
 
 -(CGRect)designFrame:(NSInteger)index {
-    CGRect frame ;    
-    if (index == 1)
-    {
-        frame = CGRectMake(((self.frame.size.width - self.initialDesignFrame.size.width)/2)+(index*10), ((self.frame.size.height - self.initialDesignFrame.size.height)/2)-(12), self.initialDesignFrame.size.width - (index*20), (self.frame.size.height-139-100)-(index*20));
-    }
-    else if (index == 2)
-    {
-        frame = CGRectMake(((self.frame.size.width - self.initialDesignFrame.size.width)/2)+(index*10), ((self.frame.size.height - self.initialDesignFrame.size.height)/2)-(22), self.initialDesignFrame.size.width - (index*20), (self.frame.size.height-139-100)-(index*20));
-        
+    CGRect frame ;
+    
+    if (!self.miniCard) {
+        if (index == 1)
+        {
+            frame = CGRectMake(((self.frame.size.width - self.initialDesignFrame.size.width)/2)+(index*10), ((self.frame.size.height - self.initialDesignFrame.size.height)/2)-(12), self.initialDesignFrame.size.width - (index*20), (self.frame.size.height-139-100)-(index*20));
+        }
+        else if (index == 2)
+        {
+            frame = CGRectMake(((self.frame.size.width - self.initialDesignFrame.size.width)/2)+(index*10), ((self.frame.size.height - self.initialDesignFrame.size.height)/2)-(22), self.initialDesignFrame.size.width - (index*20), (self.frame.size.height-139-100)-(index*20));
+            
+        }
+        else {
+            frame = CGRectMake(((self.frame.size.width - self.initialDesignFrame.size.width)/2)+(index*10), ((self.frame.size.height - self.initialDesignFrame.size.height)/2)-(index*10), self.initialDesignFrame.size.width - (index*20), (self.frame.size.height-139-100)-(index*20));
+        }
     }
     else {
-        frame = CGRectMake(((self.frame.size.width - self.initialDesignFrame.size.width)/2)+(index*10), ((self.frame.size.height - self.initialDesignFrame.size.height)/2)-(index*10), self.initialDesignFrame.size.width - (index*20), (self.frame.size.height-139-100)-(index*20));
+        frame = CGRectMake(self.initialDesignFrame.origin.x, self.initialDesignFrame.origin.y, self.initialDesignFrame.size.width, self.initialDesignFrame.size.height );
+        
     }
     
-
 
     
     NSLog(@"Design Frame: %@",NSStringFromCGRect(frame));

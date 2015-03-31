@@ -22,6 +22,8 @@
     // Do any additional setup after loading the view, typically from a nib.
      [self.view setMultipleTouchEnabled:YES];
     
+    NSLog(@"Card Frame:%@",NSStringFromCGRect(self.view.frame));
+    
     draggableBackground = [[DraggableViewBackground alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     draggableBackground.delegate=self;
     [self.view addSubview:draggableBackground];

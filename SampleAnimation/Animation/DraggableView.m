@@ -291,6 +291,10 @@ float lastScale=0;
     layer.transform = rotationAndPerspectiveTransform;
     [UIView animateWithDuration:1.0 animations:^{
         layer.transform = CATransform3DIdentity;
+        }
+        completion:^(BOOL finished) {
+            [self.delegate cardTap];
+                         
     }];
      
     
